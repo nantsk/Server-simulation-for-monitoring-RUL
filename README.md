@@ -33,7 +33,7 @@ corresponding health score is calculated.
 user can restart the simulation.
 4. monitor.html file receives the health scores of 20 engines one cycle at a time
 from the backend.
-5. These health scores are displayed in a table.
+5. These health scores are displayed in a table as shown in the following figure ![alt text](https://github.com/ritu-thombre99/Server-simulation-for-monitoring-RUL/blob/main/frontend1.png?raw=true).
 6. Range of health scores and categories are generated using jinja2 and they are
 displayed in a bar chart and a pie chart respectively, using google
-visualization tools.
+visualization tools as shown in the following figure ![Visualizations](https://github.com/ritu-thombre99/Server-simulation-for-monitoring-RUL/blob/main/frontend2.png?raw=true).
