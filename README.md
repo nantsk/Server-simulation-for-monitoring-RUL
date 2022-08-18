@@ -39,4 +39,4 @@ displayed in a bar chart and a pie chart respectively, using google
 visualization tools as shown in the following figure ![Visualizations](https://github.com/ritu-thombre99/Server-simulation-for-monitoring-RUL/blob/main/frontend2.png?raw=true).
 
 
-## To run the app type ```python main.py``` in Anaconda Powershell Prompt.
+## To run the simulation type ```python app.py``` in Anaconda Powershell Prompt.
