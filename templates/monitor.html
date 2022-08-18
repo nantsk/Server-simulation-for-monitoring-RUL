@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="../assets/css/black-dashboard.css?v=1.0.0" rel="stylesheet" />
+
+<style>  
+    h1{
+          text-align:left;
+          font-size:80px;
+          color:white;
+      }
+      h2{
+          color:white;
+          text-align:right;
+      }
+      td{
+          font-size:40px;
+          color:rgb(0, 0, 0);
+      }
+      input,button{
+          font-size:40px;
+      }
+    table{  
+        border-collapse: collapse;  
+        width: 40%;   
+        left: 50px
+    }  
+    th,td{  
+        border: 1px solid rgb(0, 0, 0);   
+        padding: 2px;  
+        }  
+
+    body { 
+        font-family: 'Open Sans', sans-serif;
+        background-color: #ffffff;
+        color: rgb(0, 0, 0);
+        font-size: 18px;
+    }
+    /* #extremely_critical_engines {
+        background-color: red;
+    } 
+    #critical_engines {
+        background-color: yellow;
+    }  
+    #normal_engines {
+        background-color: green;
+    }
+    #optimal_engines {
+        background-color: blue;
+    } */
+</style>  
+  <meta charset="UTF-8">
+  <title>Show Health Scores</title>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    google.charts.load('current', {
+        packages: ['corechart']
+    });
+</script>
+
+<!-- <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'> -->
+<!-- <link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'> -->
+<!-- <link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'> -->
+<!-- <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'> -->
+<!-- <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='./style.css') }}"> -->
+
+</head>
+
+<body>
+
+    <div>
+        <h1 align='left'>Jet Engines Health Monitoring :</h1>
+        <table align='left' id='table-box'>
+        <tr>
+        <th align='center'>Engine ID</th>
+        <th align='center'>Health Score</th>
+        </tr>
+        {% set extremely_critical = [] %}
+        {% set critical = [] %}
+        {% set normal = [] %}
+        {% set optimal = [] %}
+
+        {% set range0 = [] %}
+        {% set range1 = [] %}
+        {% set range2 = [] %}
+        {% set range3 = [] %}
+        {% set range4 = [] %}
+        {% set range5 = [] %}
+        {% set range6 = [] %}
+        {% set range7 = [] %}
+        {% set range8 = [] %}
+        {% set range9 = [] %}
+        {% for i in range(pred|length) %}
+
+                {% if pred[i] <= 0.25 %}
+                    <tr>
+                    <td id='extremely_critical_engines' align='center'>Engine_{{ i+1 }}</td>
+                    <td id='extremely_critical_engines' align='center'>{{ pred[i] }}</td>
+                    </tr>
+                    {% set extremely_critical = extremely_critical.append(i+1) %}
+                {% elif pred[i] > 0.25 and pred[i] <= 0.5 %}
+                    <tr>
+                    <td id='critical_engines' align='center'>Engine_{{ i+1 }}</td>
+                    <td id='critical_engines' align='center'>{{ pred[i] }}</td>
+                    </tr>
+                    {% set critical = critical.append(i+1) %}
+                {% elif pred[i] > 0.5 and pred[i] <= 0.75 %}
+                <tr>
+                    <td id='normal_engines' align='center'>Engine_{{ i+1 }}</td>
+                    <td id='normal_engines' align='center'>{{ pred[i] }}</td>
+                    </tr>
+                    {% set normal = normal.append(i+1) %}
+                {% else %}
+                    <tr>
+                    <td id='optimal_engines' align='center'>Engine_{{ i+1 }}</td>
+                    <td id='optimal_engines' align='center'>{{ pred[i] }}</td>
+                    </tr>
+                    {% set optimal = optimal.append(i+1) %}
+                {% endif %}
+
+                {% if pred[i] <= 0.1 %}
+                    {% set range0 = range0.append(i+1) %}
+                {% elif pred[i] > 0.1 and pred[i] <= 0.2 %}
+                    {% set range1 = range1.append(i+1) %}
+                {% elif pred[i] > 0.2 and pred[i] <= 0.3 %}
+                    {% set range2 = range2.append(i+1) %}
+                {% elif pred[i] > 0.3 and pred[i] <= 0.4 %}
+                    {% set range3 = range3.append(i+1) %}
+                {% elif pred[i] > 0.4 and pred[i] <= 0.5 %}
+                    {% set range4 = range4.append(i+1) %}
+                {% elif pred[i] > 0.5 and pred[i] <= 0.6 %}
+                    {% set range5 = range5.append(i+1) %}
+                {% elif pred[i] > 0.6 and pred[i] <= 0.7 %}
+                    {% set range6 = range6.append(i+1) %}
+                {% elif pred[i] > 0.7 and pred[i] <= 0.8 %}
+                    {% set range7 = range7.append(i+1) %}
+                {% elif pred[i] > 0.8 and pred[i] <= 0.9 %}
+                    {% set range8 = range8.append(i+1) %}
+                {% else %}
+                    {% set range9 = range9.append(i+1) %}
+                {% endif %}
+
+        {% endfor %}
+
+        <div id="container1" style="position:fixed; align:center; width: 400px; height: 200px; right: 50px; top:30px;"></div>
+        <div id="container" style="position:fixed; width: 550px; height: 300px; right: 50px; bottom:50px;"></div>
+        <script language = "JavaScript">
+            function drawChart() {
+            // Define the chart to be drawn.
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Engine Health Stats');
+            data.addColumn('number', 'Count');
+            data.addRows([
+                ['0.0-0.1', {{range0|length}}],
+                ['0.1-0.2', {{range1|length}}],
+                ['0.2-0.3', {{range2|length}}],
+                ['0.3-0.4', {{range3|length}}],
+                ['0.4-0.5', {{range4|length}}],
+                ['0.5-0.6', {{range5|length}}],
+                ['0.6-0.7', {{range6|length}}],
+                ['0.7-0.8', {{range7|length}}],
+                ['0.8-0.9', {{range8|length}}],
+                ['0.9-1.0', {{range9|length}}]
+            ]);
+
+            var data2 = google.visualization.arrayToDataTable([
+                    ['Health', 'Number of Engines'],
+                    ['Extremely Critical', {{extremely_critical|length}}],
+                    ['Critical', {{critical|length}}],
+                    ['Normal', {{normal|length}}],
+                    ['Optimal', {{optimal|length}}]
+                ]);
+                
+            // Set chart options
+            var options = {
+                title:'Engine Health Statistics',
+                width: 550,
+                height:400,
+                backgroundColor: 'transparent',
+            };
+            var options2 = {
+                title: 'Health Scores',
+                isStacked: true,
+                backgroundColor: 'transparent',
+            };
+
+            // Instantiate and draw the chart.
+            var chart = new google.visualization.PieChart(document.getElementById('container1'));
+            chart.draw(data, options);
+            var chart2 = new google.visualization.BarChart(document.getElementById('container'));
+            chart2.draw(data2, options2);
+            }
+            google.charts.setOnLoadCallback(drawChart);
+        </script>
+
+
+        <meta http-equiv = "refresh" content = "1;url = predict" />
+        </table>
+    </div>
+</body>
+</html>
