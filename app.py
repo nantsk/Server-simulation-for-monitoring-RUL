@@ -29,8 +29,8 @@ from sklearn.model_selection import KFold
 from keras import optimizers
 from keras.models import Sequential
 from keras.layers import TimeDistributed, Flatten
-from keras.layers.core import Dense, Dropout, Activation
-from keras.layers.recurrent import LSTM
+from keras.layers import Dense, Dropout, Activation, LSTM
+# from keras.layers.recurrent import LSTM
 from sklearn.metrics import mean_squared_error
 
 from sklearn.metrics import mean_absolute_error
